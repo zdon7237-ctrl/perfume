@@ -1,0 +1,108 @@
+<view class="container">
+  
+  <block wx:if="{{cartList.length > 0}}">
+    <view class="header-bar">
+      <view class="header-content">
+        <text class="header-title luxury-serif">购物袋</text>
+        <view class="manage-btn" bindtap="toggleEditMode">
+          {{isEditMode ? '完成' : '管理'}}
+        </view>
+      </view>
+      <text class="header-subtitle">已选 {{selectedCount}} / {{cartList.length}} 件商品</text>
+    </view>
+
+    <view class="cart-list">
+      <block wx:for="{{cartList}}" wx:key="index">
+        <movable-area class="item-area">
+          <movable-view 
+            class="item-view" 
+            direction="horizontal" 
+            out-of-bounds="true" 
+            damping="40" 
+            x="{{item.x}}" 
+            data-index="{{index}}"
+          >
+            <view class="cart-item-content">
+              <view class="checkbox-col" catchtap="toggleSelect" data-index="{{index}}">
+                <view class="checkbox {{item.selected ? 'checked' : ''}}">
+                  <text wx:if="{{item.selected}}" class="check-icon">✓</text>
+                </view>
+              </view>
+              
+              <view class="image-box">
+                <image class="goods-img" src="{{item.image}}" mode="aspectFill"></image>
+              </view>
+              
+              <view class="info-box">
+                <view class="info-top">
+                  <text class="brand">{{item.brand}}</text>
+                  <text class="name">{{item.name}}</text>
+                  <view class="spec-tag">{{item.spec || '标准装'}}</view>
+                </view>
+
+                <view class="info-bottom">
+                  <text class="price">¥{{item.price}}</text>
+                  <view class="stepper-minimal">
+                    <view class="step-btn minus" catchtap="updateQuantity" data-index="{{index}}" data-type="minus"></view>
+                    <text class="step-num">{{item.quantity}}</text>
+                    <view class="step-btn plus" catchtap="updateQuantity" data-index="{{index}}" data-type="plus"></view>
+                  </view>
+                </view>
+              </view>
+            </view>
+
+            <view class="slide-delete-btn" catchtap="deleteItem" data-index="{{index}}">
+              <text>删除</text>
+            </view>
+
+          </movable-view>
+        </movable-area>
+      </block>
+    </view>
+
+    <view class="coupon-section" bindtap="goToCoupons" wx:if="{{!isEditMode}}">
+      <view class="coupon-row">
+        <view class="coupon-label">
+          <text class="icon">🎟</text>
+          <text>礼券与权益</text>
+        </view>
+        <view class="coupon-value">
+          <text wx:if="{{hasDiscount}}" class="discount-text">-¥{{discountAmount}}</text>
+          <text wx:else class="placeholder">{{selectedCoupon ? selectedCoupon.name : '选择优惠券'}}</text>
+          <text class="arrow">›</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="footer-wrapper">
+      <view class="footer-content">
+        <view class="all-check-group" bindtap="toggleAll">
+          <view class="checkbox small {{isAllSelected ? 'checked' : ''}}">
+            <text wx:if="{{isAllSelected}}" class="check-icon">✓</text>
+          </view>
+          <text class="all-text">全选</text>
+        </view>
+
+        <view class="footer-right" wx:if="{{!isEditMode}}">
+          <view class="total-box">
+            <text class="total-label">合计</text>
+            <text class="total-price">¥{{finalPrice}}</text>
+          </view>
+          <view class="action-btn checkout" bindtap="onCheckout">结算 ({{selectedCount}})</view>
+        </view>
+
+        <view class="footer-right" wx:else>
+          <view class="action-btn delete" bindtap="batchDelete">删除所选</view>
+        </view>
+      </view>
+    </view>
+
+  </block>
+
+  <view wx:else class="empty-state">
+    <view class="empty-icon">👜</view>
+    <view class="empty-text">您的购物袋是空的</view>
+    <navigator url="/pages/index/index" open-type="switchTab" class="go-shop-btn">去逛逛</navigator>
+  </view>
+
+</view>

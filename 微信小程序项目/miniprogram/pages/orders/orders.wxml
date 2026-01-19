@@ -1,0 +1,51 @@
+<view class="container">
+  <scroll-view scroll-x class="tabs-nav" enable-flex>
+    <view 
+      wx:for="{{tabs}}" 
+      wx:key="*this" 
+      class="tab-item {{activeTab === index ? 'active' : ''}}"
+      bindtap="onTabClick"
+      data-index="{{index}}"
+    >
+      {{item}}
+    </view>
+  </scroll-view>
+
+  <scroll-view scroll-y class="order-list">
+    <block wx:if="{{displayOrders.length > 0}}">
+      <view class="order-card" wx:for="{{displayOrders}}" wx:key="id">
+        <view class="card-header">
+          <text class="order-time">{{item.createTime}}</text>
+          <text class="status-text" wx:if="{{item.status===0}}">待付款</text>
+          <text class="status-text" wx:elif="{{item.status===1}}" style="color:#d4af37">待发货</text>
+          <text class="status-text" wx:elif="{{item.status===2}}" style="color:#007aff">运输中</text>
+          <text class="status-text" wx:elif="{{item.status===3}}" style="color:green">已完成</text>
+          <text class="status-text" wx:elif="{{item.status===4}}" style="color:red">售后中</text>
+        </view>
+
+        <view class="goods-row" wx:for="{{item.items}}" wx:for-item="goods" wx:key="id">
+          <image src="{{goods.image}}" mode="aspectFill" class="goods-img"></image>
+          <view class="goods-info">
+            <view class="goods-name">{{goods.name}}</view>
+            <view class="goods-spec">x{{goods.quantity}}</view>
+          </view>
+          <view class="goods-price">¥{{goods.price}}</view>
+        </view>
+
+        <view class="card-footer">
+          <view class="total-price">实付: ¥{{item.totalPrice}}</view>
+          
+          <view class="btn-group">
+            <button class="btn sm" wx:if="{{item.status===1}}">催发货</button>
+            
+            <button class="btn sm primary" wx:if="{{item.status===2}}" bindtap="onConfirmReceipt" data-id="{{item.id}}">确认收货</button>
+            
+            <button class="btn sm" wx:if="{{item.status===3}}" bindtap="onRefund" data-id="{{item.id}}">申请售后</button>
+          </view>
+        </view>
+      </view>
+    </block>
+
+    <view wx:else class="empty-tip">暂无相关订单</view>
+  </scroll-view>
+</view>
