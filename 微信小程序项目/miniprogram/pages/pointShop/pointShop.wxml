@@ -1,0 +1,44 @@
+<view class="container">
+  
+  <view class="header-card">
+    <view class="header-top">
+      <view class="label">当前可用积分</view>
+      <view class="history-btn" bindtap="onGoToHistory">积分明细 ></view>
+    </view>
+    <view class="points-num">{{myPoints}}</view>
+    <view class="header-bottom">
+      <view class="tips">积分有效期：自获取之日起1年内有效</view>
+    </view>
+  </view>
+
+  <view class="section-title">
+    <text class="icon">✨</text>
+    <text class="text">会员专享礼遇</text>
+  </view>
+
+  <view class="grid">
+    <view class="card" wx:for="{{giftList}}" wx:key="id">
+      <view class="img-box">
+        <image wx:if="{{item.image}}" src="{{item.image}}" mode="aspectFill"></image>
+        <view wx:else class="no-img-text">Gift</view>
+        <view class="stock-tag" wx:if="{{item.stock < 10}}">仅剩{{item.stock}}件</view>
+      </view>
+      
+      <view class="info">
+        <view class="name">{{item.name}}</view>
+        <view class="price-row">
+          <text class="diamond">💎</text>
+          <text class="cost">{{item.points}}</text>
+        </view>
+      </view>
+
+      <button 
+        class="btn-redeem {{myPoints < item.points ? 'disabled' : ''}}" 
+        bindtap="onRedeem" 
+        data-item="{{item}}"
+      >
+        {{myPoints < item.points ? '积分不足' : '立即兑换'}}
+      </button>
+    </view>
+  </view>
+</view>

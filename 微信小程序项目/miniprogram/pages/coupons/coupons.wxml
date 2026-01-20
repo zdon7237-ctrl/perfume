@@ -1,0 +1,95 @@
+<view class="container">
+  
+  <view class="tabs">
+    <view 
+      class="tab {{activeTab === index ? 'active' : ''}}" 
+      wx:for="{{tabs}}" 
+      wx:key="*this"
+      bindtap="onTabClick"
+      data-index="{{index}}"
+    >
+      {{item}}
+    </view>
+  </view>
+
+  <scroll-view scroll-y class="coupon-list">
+    <block wx:if="{{displayList.length > 0}}">
+      <view 
+        class="coupon-card {{item.status !== 0 ? 'disabled' : ''}}" 
+        wx:for="{{displayList}}" 
+        wx:key="id"
+      >
+        
+        <view class="coupon-main" bindtap="onSelectCoupon" data-item="{{item}}">
+          <view class="left-part">
+            <view class="price-row" wx:if="{{item.type === 'cash'}}">
+              <text class="symbol">¥</text>
+              <text class="amount">{{item.value}}</text>
+            </view>
+            <view class="price-row" wx:else>
+              <text class="amount">{{item.value * 10}}</text>
+              <text class="symbol">折</text>
+            </view>
+            <view class="condition">满{{item.min}}元可用</view>
+          </view>
+
+          <view class="right-part">
+            <view class="info">
+              <view class="name">
+                <text class="tag">{{item.type === 'cash' ? '满减' : '折扣'}}</text>
+                {{item.name}}
+              </view>
+              <view class="date">{{item.date}}</view>
+              <view class="reason" wx:if="{{item.reason}}">{{item.reason}}</view>
+            </view>
+            
+            <view class="action-btn {{isFromCart ? 'select-mode' : ''}}" wx:if="{{item.status === 0}}">
+              {{isFromCart ? '立即使用' : '去使用'}}
+            </view>
+
+            <view class="toggle-icon" catchtap="toggleExpand" data-id="{{item.id}}">
+              <text class="arrow-icon {{item.expanded ? 'up' : ''}}">⌄</text>
+            </view>
+
+            <view class="status-stamp" wx:if="{{item.status === 1}}">USED</view>
+            <view class="status-stamp" wx:if="{{item.status === 2}}">EXPIRED</view>
+          </view>
+
+          <view class="dot-top"></view>
+          <view class="dot-bottom"></view>
+        </view>
+
+        <view class="coupon-details" wx:if="{{item.expanded}}">
+          <view class="dashed-line"></view>
+          <view class="detail-content">
+            <view class="cond-item" wx:for="{{item.conditions}}" wx:for-item="cond" wx:key="*this">
+              {{cond}}
+            </view>
+            
+            <view 
+              class="product-link-row" 
+              wx:if="{{item.productLink}}" 
+              catchtap="viewProductList" 
+              data-url="{{item.productLink}}"
+            >
+              <text>查看可用商品</text>
+              <text class="link-arrow">></text>
+            </view>
+            
+          </view>
+        </view>
+
+      </view>
+    </block>
+
+    <view wx:else class="empty-tip">
+      <text wx:if="{{activeTab===0}}">暂无可用优惠券</text>
+      <text wx:elif="{{activeTab===1}}">暂无已使用记录</text>
+      <text wx:else>暂无失效优惠券</text>
+    </view>
+  </scroll-view>
+
+  <view class="footer-fixed" wx:if="{{isFromCart && activeTab === 0}}">
+    <button class="no-use-btn" bindtap="onNoUse">不使用优惠券</button>
+  </view>
+</view>
