@@ -1,0 +1,39 @@
+<view class="container">
+  
+  <view class="overview-card">
+    <view class="overview-label">当前有效积分</view>
+    <view class="overview-num">{{totalPoints}}</view>
+    <view class="overview-bg-icon">POINTS</view>
+  </view>
+
+  <view class="list-title">账单明细</view>
+
+  <scroll-view scroll-y class="history-list">
+    <block wx:if="{{list.length > 0}}">
+      <view class="history-item" wx:for="{{list}}" wx:key="id">
+        
+        <view class="left-box">
+          <view class="icon-circle {{item.type === 'gain' ? 'gold' : 'dark'}}">
+            {{item.type === 'gain' ? '存' : '支'}}
+          </view>
+          <view class="info">
+            <view class="desc">{{item.desc}}</view>
+            <view class="time">{{item.timeStr}}</view>
+          </view>
+        </view>
+
+        <view class="amount {{item.type === 'gain' ? 'plus' : 'minus'}}">
+          {{item.type === 'gain' ? '+' : '-'}}{{item.amount}}
+        </view>
+
+      </view>
+    </block>
+
+    <view wx:else class="empty-state">
+      <text class="empty-icon">💸</text>
+      <text>暂无积分记录</text>
+    </view>
+    
+    <view style="height: 40rpx;"></view>
+  </scroll-view>
+</view>

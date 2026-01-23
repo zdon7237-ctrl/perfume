@@ -1,0 +1,137 @@
+<view class="container" style="padding-top: {{paddingTop}}px;">
+  
+  <view class="user-header">
+    <view class="user-basic-info">
+      <view class="avatar-box">
+        <image wx:if="{{userInfo.avatarUrl}}" src="{{userInfo.avatarUrl}}" mode="aspectFill"></image>
+        <view wx:else class="avatar-text">User</view>
+      </view>
+      <view class="text-info">
+        <view class="nickname">{{userInfo.nickName}}</view>
+        <view class="user-id">ID: 88291034</view>
+      </view>
+    </view>
+    <view class="qr-btn" bindtap="onMemberCode">
+      <text>会员码</text>
+    </view>
+  </view>
+
+  <swiper 
+    class="member-swiper" 
+    current="{{currentSwiperIndex}}" 
+    previous-margin="30rpx" 
+    next-margin="30rpx"
+    duration="500"
+    bindchange="onSwiperChange"
+  >
+    <block wx:for="{{levelList}}" wx:key="level">
+      <swiper-item class="swiper-item-wrapper">
+        <view class="member-card {{item.className}}">
+          
+          <view class="card-bg-pattern"></view>
+          
+          <view class="current-tag" wx:if="{{index === userLevelIndex}}">当前等级</view>
+          <view class="lock-tag" wx:if="{{index > userLevelIndex}}">未解锁</view>
+
+          <view class="card-top">
+            <view class="level-badge">
+              <text class="en-font">Lv.{{item.level}}</text>
+              <text class="cn-font">{{item.name}}</text>
+            </view>
+          </view>
+
+          <view class="card-middle">
+            <view class="benefits-row">
+              <text wx:for="{{item.benefits}}" wx:for-item="benefit" wx:key="*this" class="benefit-pill">{{benefit}}</text>
+            </view>
+          </view>
+
+          <view class="card-bottom">
+            <view wx:if="{{index === userLevelIndex}}">
+              <view class="prog-text" wx:if="{{index < 5}}">
+                再消费 <text class="num">¥{{nextLevelSpend}}</text> 升级
+              </view>
+              <view class="prog-text" wx:else>尊贵身份，无与伦比</view>
+            </view>
+            <view wx:elif="{{index < userLevelIndex}}">
+               <view class="prog-text">您已超越该等级</view>
+            </view>
+             <view wx:else>
+               <view class="prog-text">继续探索以解锁尊贵权益</view>
+            </view>
+          </view>
+
+        </view>
+      </swiper-item>
+    </block>
+  </swiper>
+
+  <view class="section-card stats-card">
+    <view class="stat-item" bindtap="onGoToPointHistory">
+      <view class="stat-num">{{stats.points}}</view>
+      <view class="stat-label">我的积分</view>
+    </view>
+    <view class="stat-line"></view>
+    <view class="stat-item" bindtap="onGoToCoupons">
+      <view class="stat-num">{{stats.coupons}}</view>
+      <view class="stat-label">优惠券</view>
+    </view>
+    <view class="stat-line"></view>
+    <view class="stat-item" bindtap="onGoToWallet">
+      <view class="stat-num">{{stats.wallet}}</view>
+      <view class="stat-label">余额</view>
+    </view>
+  </view>
+
+  <view class="section-card orders-card">
+    <view class="section-header" bindtap="onGoToOrders" data-type="0">
+      <text class="section-title">我的订单</text>
+      <view class="section-more">全部订单 <text class="arrow">›</text></view>
+    </view>
+    
+    <view class="order-icons-row">
+      <view class="order-icon-item" bindtap="onGoToOrders" data-type="1">
+        <view class="icon-emoji">💳</view>
+        <text class="icon-label">待付款</text>
+      </view>
+      <view class="order-icon-item" bindtap="onGoToOrders" data-type="2">
+        <view class="icon-emoji">📦</view>
+        <text class="icon-label">待发货</text>
+      </view>
+      <view class="order-icon-item" bindtap="onGoToOrders" data-type="3">
+        <view class="icon-emoji">🚚</view>
+        <text class="icon-label">待收货</text>
+      </view>
+      <view class="order-icon-item" bindtap="onGoToOrders" data-type="4">
+        <view class="icon-emoji">🎧</view>
+        <text class="icon-label">退换/售后</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="section-card menu-card">
+    <view class="menu-item" bindtap="onGoToPointShop">
+      <view class="menu-left">
+        <text class="menu-icon">🎁</text>
+        <text class="menu-text">积分商城</text>
+      </view>
+      <text class="arrow">›</text>
+    </view>
+    <view class="menu-item" bindtap="onGoToCart">
+      <view class="menu-left">
+        <text class="menu-icon">🛍️</text>
+        <text class="menu-text">我的购物袋</text>
+      </view>
+      <text class="arrow">›</text>
+    </view>
+    <view class="menu-item" bindtap="onGoToAdmin">
+      <view class="menu-left">
+        <text class="menu-icon">⚙️</text>
+        <text class="menu-text">后台管理 (Dev)</text>
+      </view>
+      <text class="arrow">›</text>
+    </view>
+  </view>
+
+  <view class="footer-spacer"></view>
+</view>

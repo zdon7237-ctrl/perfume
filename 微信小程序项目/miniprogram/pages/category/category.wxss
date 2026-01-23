@@ -1,0 +1,109 @@
+/* miniprogram/pages/category/category.wxss */
+
+page { background-color: #f7f7f7; height: 100%; }
+.container { display: flex; flex-direction: column; height: 100%; }
+
+.fixed-header { position: fixed; top: 0; left: 0; width: 100%; z-index: 99; background: #fff; }
+.header-row { display: flex; align-items: center; padding: 8px 12px; background: #fff; }
+
+.back-btn { display: flex; align-items: center; justify-content: center; margin-right: 10px; width: 32px; height: 32px; background: #f5f5f5; border-radius: 50%; color: #333; }
+.back-icon { font-size: 18px; font-weight: bold; margin-top: -2px; }
+
+.search-box { flex: 1; }
+.search-inner { background: #f5f5f5; height: 36px; border-radius: 18px; display: flex; align-items: center; padding: 0 12px; }
+.search-input { flex: 1; font-size: 14px; margin-left: 8px; color: #333; }
+.ph-text { color: #999; }
+.clear-icon { width: 20px; height: 20px; line-height: 20px; text-align: center; background: #ccc; color: #fff; border-radius: 50%; font-size: 12px; }
+
+.sort-bar { display: flex; align-items: center; height: 40px; border-bottom: 1rpx solid #eee; background: #fff; }
+.sort-item { flex: 1; text-align: center; font-size: 14px; color: #666; line-height: 40px; }
+.sort-item.active { color: #333; font-weight: bold; }
+.sort-icon { width: 40px; text-align: center; color: #999; font-size: 16px; border-left: 1rpx solid #eee; }
+
+.header-placeholder { height: 92px; }
+
+.scroll-area { flex: 1; }
+.goods-grid { padding: 10px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start; /* 关键：防止行高被拉伸 */ }
+
+.goods-card { 
+  width: 48.5%; background: #fff;
+  border-radius: 8px; margin-bottom: 10px; 
+  overflow: hidden;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.02); 
+  display: flex; flex-direction: column; 
+}
+
+.img-wrapper { 
+  width: 100%; height: 0; padding-bottom: 100%;
+  position: relative; background: #f8f8f8; 
+}
+.goods-img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+
+/* --- 标签样式 --- */
+.badge-new { 
+  position: absolute; top: 8px; left: 8px; 
+  background: #333; color: #d4af37; 
+  font-size: 10px; padding: 2px 6px;
+  border-radius: 2px; font-weight: bold;
+}
+
+/* 之前缺失或未生效的样式：库存预警 */
+.badge-stock {
+  position: absolute; /* 绝对定位，悬浮在图片上 */
+  bottom: 8px; right: 8px; /* 改到右下角，避免遮挡左侧信息 */
+  background: rgba(214, 48, 49, 0.9); /* 红色半透明 */
+  color: #fff;
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: 600;
+  z-index: 10;
+}
+
+.content { 
+  padding: 10px; flex: 1; 
+  display: flex; flex-direction: column; justify-content: space-between;
+}
+
+.title { 
+  font-size: 14px; color: #333; line-height: 1.4;
+  margin-bottom: 8px; 
+  display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; text-overflow: ellipsis; 
+}
+
+.tags-row { 
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 8px; 
+}
+.tag-member { 
+  font-size: 10px; color: #d4af37; background: #2b2b2b; 
+  padding: 2px 6px; border-radius: 4px; 
+}
+.sold-num { font-size: 10px; color: #ccc; }
+
+.bottom-row { 
+  display: flex; align-items: flex-end; justify-content: space-between; 
+}
+
+.price-wrapper { display: flex; flex-direction: column; }
+.price-current { color: #333; font-weight: bold; line-height: 1; margin-bottom: 2px; }
+.price-origin { font-size: 10px; color: #ccc; text-decoration: line-through; }
+
+.price-lowest { color: #ff4d4f; font-weight: bold; line-height: 1; margin-bottom: 2px; display: flex; align-items: baseline; }
+.tag-coupon { 
+  font-size: 9px; border: 1px solid #ff4d4f; color: #ff4d4f; 
+  padding: 0 2px; border-radius: 2px; margin-right: 4px;
+  transform: translateY(-1px); 
+}
+
+.symbol { font-size: 12px; margin-right: 1px;}
+.num { font-size: 18px; }
+
+.cart-btn { 
+  width: 28px; height: 28px; 
+  display: flex; align-items: center; justify-content: center;
+  background: #f9f9f9; border-radius: 50%;
+}
+.cart-icon { font-size: 18px; }
+
+.empty-tip { width: 100%; text-align: center; padding-top: 50px; color: #999; }
