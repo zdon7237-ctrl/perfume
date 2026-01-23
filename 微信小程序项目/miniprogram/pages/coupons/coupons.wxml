@@ -1,0 +1,66 @@
+<view class="container">
+  
+  <view class="tabs">
+    <view class="tab-item {{activeTab===0 ? 'active' : ''}}" bindtap="onTabChange" data-index="0">
+      可使用 ({{displayList.length}})
+      <view class="indicator" wx:if="{{activeTab===0}}"></view>
+    </view>
+    <view class="tab-item {{activeTab===1 ? 'active' : ''}}" bindtap="onTabChange" data-index="1">
+      已失效
+      <view class="indicator" wx:if="{{activeTab===1}}"></view>
+    </view>
+  </view>
+
+  <scroll-view scroll-y class="coupon-list">
+    <block wx:for="{{displayList}}" wx:key="id">
+      <view class="coupon-card {{item.status!==0 ? 'is-disabled' : ''}}" 
+            bindtap="onUseCoupon" 
+            data-index="{{index}}">
+        
+        <view class="card-left">
+          <view class="amount-wrap">
+            <text class="sym" wx:if="{{item.type==='cash'}}">¥</text>
+            <text class="num">{{item.type==='cash' ? item.value : item.value*10}}</text>
+            <text class="unit" wx:if="{{item.type==='discount'}}">折</text>
+          </view>
+          <view class="condition">满{{item.min}}元可用</view>
+        </view>
+
+        <view class="card-right">
+          <view class="info">
+            <view class="title-row">
+              <text class="limit-tag" wx:if="{{item.limitBrands.length > 0}}">品牌限定</text>
+              <text class="title-text">{{item.name}}</text>
+            </view>
+            <view class="date">有效期至 {{item.endTime}}</view>
+            <view class="desc" wx:if="{{item.desc}}">{{item.desc}}</view>
+
+            <view class="view-products-link" wx:if="{{item.limitBrands.length > 0 && item.status===0}}">
+              查看适用商品 >
+            </view>
+          </view>
+
+          <view class="action-area">
+            <block wx:if="{{item.status===0}}">
+              <view class="use-btn {{selectedId === item.id ? 'selected' : ''}}">
+                 {{selectedId === item.id ? '已选' : '去使用'}}
+              </view>
+            </block>
+          </view>
+        </view>
+
+        <view class="status-watermark" wx:if="{{item.status!==0}}">
+          <text>{{item.status === 1 ? '已使用' : '已过期'}}</text>
+        </view>
+
+      </view>
+    </block>
+
+    <view wx:if="{{displayList.length === 0}}" class="empty-state">
+      <view class="empty-text">暂无相关优惠券</view>
+      <view class="empty-btn" bindtap="goHome">去首页逛逛</view>
+    </view>
+
+    <view class="bottom-space"></view>
+  </scroll-view>
+</view>

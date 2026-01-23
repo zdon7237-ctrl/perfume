@@ -1,0 +1,56 @@
+<view class="container" wx:if="{{info}}">
+  <image class="hero-img" src="{{info.image}}" mode="aspectFill"></image>
+
+  <view class="info-card">
+    <view class="price-row">
+      <view class="price-wrapper" style="display: flex; align-items: baseline;">
+        <view class="price">¥<text class="num">{{currentPrice}}</text></view>
+        
+        <block wx:if="{{showMemberPrice}}">
+           <view style="text-decoration: line-through; color: #999; font-size: 24rpx; margin-left: 10rpx;">¥{{info.price}}</view>
+           <view style="font-size: 20rpx; background: #000; color: #fff; padding: 2rpx 8rpx; margin-left: 10rpx; border-radius: 4rpx;">会员专享</view>
+        </block>
+
+        <view wx:if="{{showExcludedTag}}" 
+              style="font-size: 22rpx; background: #f5f5f5; color: #999; padding: 4rpx 12rpx; margin-left: 12rpx; border-radius: 4rpx;">
+          不参与折扣
+        </view>
+      </view>
+
+      <view class="sold">销量 {{info.sales}} <text style="margin: 0 10rpx; opacity: 0.3;">|</text> 库存 {{info.stock}}</view>
+    </view>
+    
+    <view class="brand">{{info.brand}}</view>
+    <view class="name">{{info.name}}</view>
+    <view class="desc">{{info.desc}}</view>
+  </view>
+
+  <view class="detail-section">
+    <view class="section-title">香水故事</view>
+    <view class="rich-text">
+      <view>前调：佛手柑、柠檬</view>
+      <view>中调：五月玫瑰、茉莉、依兰</view>
+      <view>后调：橡木苔、广藿香、鸢尾根</view>
+      <view style="margin-top:20rpx; color:#666; line-height:1.6;">
+        这是一款极具艺术感的香水，灵感来源于经典的俄罗斯芭蕾。它复杂、深邃，如同在皮肤上上演的一出宏大歌剧。
+      </view>
+    </view>
+  </view>
+  
+  <view style="height: 120rpx;"></view>
+
+  <view class="bottom-bar">
+    <view class="icon-btn" bindtap="goHome">
+      <text>🏠</text>
+      <text class="txt">首页</text>
+    </view>
+    <view class="icon-btn" bindtap="goToCart">
+      <text>🛒</text>
+      <text class="txt">购物车</text>
+    </view>
+    <view class="btn-group">
+      <view class="btn cart" bindtap="addToCart">加入购物车</view>
+      <view class="btn buy" bindtap="buyNow">立即购买</view>
+    </view>
+  </view>
+</view>

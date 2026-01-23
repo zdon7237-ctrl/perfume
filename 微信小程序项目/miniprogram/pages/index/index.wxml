@@ -1,0 +1,20 @@
+<view class="price-row" style="display: flex; align-items: baseline; margin-top: 10rpx;">
+  
+  <text style="font-size: 30rpx; font-weight: bold; color: #333;">¥{{item.displayPrice}}</text>
+  
+  <text wx:if="{{item.showMemberTag}}" 
+        style="font-size: 22rpx; color: #999; text-decoration: line-through; margin-left: 8rpx;">
+    ¥{{item.price}}
+  </text>
+
+  <view wx:if="{{item.showMemberTag}}" 
+        style="font-size: 18rpx; background: #000; color: #fff; padding: 2rpx 6rpx; border-radius: 4rpx; margin-left: 8rpx;">
+    VIP
+  </view>
+  
+  <view wx:if="{{item.showExcludedTag}}" 
+        style="font-size: 18rpx; background: #f0f0f0; color: #999; padding: 2rpx 6rpx; border-radius: 4rpx; margin-left: 8rpx;">
+    不参与折扣
+  </view>
+
+</view>

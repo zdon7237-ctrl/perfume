@@ -1,0 +1,25 @@
+<view class="container" style="padding: 30rpx;">
+  <view style="font-size: 36rpx; font-weight: bold; margin-bottom: 30rpx;">后台调试中心</view>
+  
+  <view style="background:#f8f9fa; padding: 20rpx; border-radius:12rpx; margin-bottom:40rpx;">
+    <view style="margin-bottom:10rpx;">当前用户: {{userLevel}}</view>
+    <view style="margin-bottom:20rpx; color:#666; font-size:24rpx;">消费额: ¥{{currentSpend}}</view>
+    <view style="display:flex; gap:20rpx;">
+      <button size="mini" type="primary" bindtap="simulateVip">变身钻石会员</button>
+      <button size="mini" type="warn" bindtap="resetUser">重置</button>
+    </view>
+  </view>
+
+  <view style="font-size: 28rpx; font-weight:bold; margin-bottom:20rpx;">商品折扣控制</view>
+  <block wx:for="{{perfumes}}" wx:key="id">
+    <view style="display: flex; justify-content: space-between; align-items: center; padding: 20rpx 0; border-bottom: 1px solid #eee;">
+      <view>
+        <view>{{item.name}}</view>
+        <view style="font-size: 20rpx; color: {{item.allowMemberDiscount !== false ? 'green' : 'red'}};">
+          {{item.allowMemberDiscount !== false ? '✅ 参与折扣' : '🚫 不参与折扣'}}
+        </view>
+      </view>
+      <switch checked="{{item.allowMemberDiscount !== false}}" bindchange="toggleDiscountStatus" data-id="{{item.id}}" color="#000"/>
+    </view>
+  </block>
+</view>
